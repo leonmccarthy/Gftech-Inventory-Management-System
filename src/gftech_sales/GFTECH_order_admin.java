@@ -5,17 +5,42 @@
  */
 package gftech_sales;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author leon
  */
-public class GFTECH_order_confirmation extends javax.swing.JFrame {
+public class GFTECH_order_admin extends javax.swing.JFrame {
 
     /**
-     * Creates new form GFTECH_order_confirmation
+     * Creates new form GFTECH_order_admin
      */
-    public GFTECH_order_confirmation() {
+    public GFTECH_order_admin() {
         initComponents();
+        scaleImage();
+        setIcon();
+        this.setTitle("GFTECH_System");
+    }
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/GFTECH logo.jpg")));
+    }
+    
+    public void scaleImage(){
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/GFTECH logo.jpg"));
+        //Scaling image
+        Image img = icon.getImage();
+        Image imgscale = img.getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(imgscale);
+        jLabel_logo.setIcon(scaledIcon);
     }
 
     /**
@@ -33,10 +58,11 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
         jLabel_password = new javax.swing.JLabel();
         jTextField_username = new javax.swing.JTextField();
         jPasswordField = new javax.swing.JPasswordField();
-        jButton_back = new javax.swing.JButton();
+        jButton_clear = new javax.swing.JButton();
         jButton_login = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel_title = new javax.swing.JLabel();
+        jButton_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,18 +85,18 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
 
         jPasswordField.setFont(new java.awt.Font("Dubai", 0, 15)); // NOI18N
 
-        jButton_back.setBackground(new java.awt.Color(254, 0, 0));
-        jButton_back.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton_back.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_back.setText("Clear");
-        jButton_back.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton_clear.setBackground(new java.awt.Color(254, 0, 0));
+        jButton_clear.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton_clear.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_clear.setText("Clear");
+        jButton_clear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_backMouseClicked(evt);
+                jButton_clearMouseClicked(evt);
             }
         });
-        jButton_back.addActionListener(new java.awt.event.ActionListener() {
+        jButton_clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_backActionPerformed(evt);
+                jButton_clearActionPerformed(evt);
             }
         });
 
@@ -98,18 +124,43 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
         );
 
+        jButton_back.setBackground(new java.awt.Color(254, 0, 0));
+        jButton_back.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton_back.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_back.setText("Back");
+        jButton_back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_backMouseClicked(evt);
+            }
+        });
+        jButton_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_backActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(128, 128, 128)
+                .addComponent(jButton_clear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_login, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(205, 205, 205))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -122,23 +173,17 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
                             .addComponent(jTextField_username, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jButton_back)
-                        .addGap(129, 129, 129)
-                        .addComponent(jButton_login, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(104, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+                        .addGap(283, 283, 283)
+                        .addComponent(jButton_back)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_username, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_username, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -146,11 +191,13 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_password, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_back)
+                    .addComponent(jButton_clear)
                     .addComponent(jButton_login))
-                .addGap(48, 48, 48))
+                .addGap(18, 18, 18)
+                .addComponent(jButton_back)
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,31 +214,31 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_backMouseClicked
+    private void jButton_clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_clearMouseClicked
         //        jTextField_username.setText(null);
         //        jPasswordField.setText(null);
-    }//GEN-LAST:event_jButton_backMouseClicked
+    }//GEN-LAST:event_jButton_clearMouseClicked
 
-    private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
+    private void jButton_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_clearActionPerformed
         jTextField_username.setText(null);
         jPasswordField.setText(null);
-    }//GEN-LAST:event_jButton_backActionPerformed
+    }//GEN-LAST:event_jButton_clearActionPerformed
 
     private void jButton_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginActionPerformed
         if(jTextField_username.getText().isEmpty()||jPasswordField.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Please fill in the field(s)!!!");
         }else{
-            String query = "select * from gftech_user where Name = '"+jTextField_username.getText()+"' and Password = '"+jPasswordField.getText()+"'";
+            String query = "select * from gftech_user_admin where Name = '"+jTextField_username.getText()+"' and Password = '"+jPasswordField.getText()+"'";
             try{
                 Class.forName("org.sqlite.JDBC");
                 Connection con = DriverManager.getConnection("jdbc:sqlite:gftech_db.db");
                 Statement stmt = con.createStatement();
                 ResultSet Rs = stmt.executeQuery(query);
                 if(Rs.next()){
-                    GFTECH_Dashboard ds = new GFTECH_Dashboard();
-                    ds.setVisible(true);
-                    ds.setLocationRelativeTo(null);
-                    ds.pack();
+                    GFTECH_view_orders vo = new GFTECH_view_orders();
+                    vo.setVisible(true);
+                    vo.setLocationRelativeTo(null);
+                    vo.pack();
                     this.dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Username and Password combination does not exist!!!");
@@ -203,6 +250,19 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton_loginActionPerformed
+
+    private void jButton_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_backMouseClicked
+        //        jTextField_username.setText(null);
+        //        jPasswordField.setText(null);
+    }//GEN-LAST:event_jButton_backMouseClicked
+
+    private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
+        GFTECH_order_form od = new GFTECH_order_form();
+        od.setVisible(true);
+        od.pack();
+        od.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jButton_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,26 +281,27 @@ public class GFTECH_order_confirmation extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GFTECH_order_confirmation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GFTECH_order_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GFTECH_order_confirmation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GFTECH_order_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GFTECH_order_confirmation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GFTECH_order_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GFTECH_order_confirmation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GFTECH_order_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GFTECH_order_confirmation().setVisible(true);
+                new GFTECH_order_admin().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_back;
+    private javax.swing.JButton jButton_clear;
     private javax.swing.JButton jButton_login;
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_password;

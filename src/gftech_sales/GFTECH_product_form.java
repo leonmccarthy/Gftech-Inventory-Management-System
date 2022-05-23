@@ -445,7 +445,9 @@ public class GFTECH_product_form extends javax.swing.JFrame {
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:gftech_db.db");
             Statement stmt = con.createStatement();
-            String query = "insert into gftech_product (ID, Name, Price,  Category, Quantity) values ('"+jTextField_product_id.getText()+"', '"+jTextField_product_name.getText()+"', '"+jTextField_product_price.getText()+"', '"+jComboBox_product_category.getSelectedItem().toString()+"', '"+jTextField_product_quantity.getText()+"')";
+            String query = "insert into gftech_product (ID, Name, Price,  Category, Quantity) values ('"+jTextField_product_id.getText()+"', "
+                    + "'"+jTextField_product_name.getText()+"', '"+jTextField_product_price.getText()+"', "
+                    + "'"+jComboBox_product_category.getSelectedItem().toString()+"', '"+jTextField_product_quantity.getText()+"')";
             stmt.executeUpdate(query);
             JOptionPane.showMessageDialog(null, "Product Successfully inserted!!!");
             load();
@@ -495,7 +497,9 @@ public class GFTECH_product_form extends javax.swing.JFrame {
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:gftech_db.db");
             Statement stmt = con.createStatement();
-            String query = "update gftech_product set Name = '"+jTextField_product_name.getText()+"',  Price = '"+jTextField_product_price.getText()+"', Category = '"+jComboBox_product_category.getSelectedItem().toString()+"', Quantity = '"+jTextField_product_quantity.getText()+"' where ID ='"+jTextField_product_id.getText()+"'";
+            String query = "update gftech_product set Name = '"+jTextField_product_name.getText()+"',  Price = '"+jTextField_product_price.getText()+"',"
+                    + " Category = '"+jComboBox_product_category.getSelectedItem().toString()+"', Quantity = '"+jTextField_product_quantity.getText()+"'"
+                    + " where ID ='"+jTextField_product_id.getText()+"'";
             stmt.executeUpdate(query);
             JOptionPane.showMessageDialog(null, "Product Successfully updated!!!");
             load();

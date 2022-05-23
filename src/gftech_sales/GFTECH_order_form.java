@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,6 +40,7 @@ public class GFTECH_order_form extends javax.swing.JFrame {
         loadcustomer();
         loadproduct();
         getToday();
+        updateCombo();
         this.setLocationRelativeTo(null);
         setIcon();
         this.setTitle("GFTECH_System");
@@ -114,6 +116,25 @@ public class GFTECH_order_form extends javax.swing.JFrame {
         }
 
        }
+       public void updateCombo(){
+//        Connection con=null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String query = "select * from gftech_user";
+        try {
+        Connection con = DriverManager.getConnection("jdbc:sqlite:gftech_db.db");
+        pst = con.prepareStatement(query);
+        rs = pst.executeQuery();
+        while(rs.next()){
+            jComboBox.addItem(rs.getString("Name"));
+        }
+        pst.close();
+        con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error!!!"+ e);
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,6 +176,8 @@ public class GFTECH_order_form extends javax.swing.JFrame {
         jButton_print = new javax.swing.JButton();
         jLabel_order_price1 = new javax.swing.JLabel();
         jLabel_order_total_show = new javax.swing.JLabel();
+        jLabel_sold_by = new javax.swing.JLabel();
+        jComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -431,6 +454,15 @@ public class GFTECH_order_form extends javax.swing.JFrame {
         jLabel_order_total_show.setForeground(new java.awt.Color(0, 0, 0));
         jLabel_order_total_show.setText("Amount");
 
+        jLabel_sold_by.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_sold_by.setForeground(new java.awt.Color(254, 0, 0));
+        jLabel_sold_by.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_sold_by.setText("Sold by: ");
+
+        jComboBox.setBackground(new java.awt.Color(254, 0, 0));
+        jComboBox.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBox.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -450,9 +482,11 @@ public class GFTECH_order_form extends javax.swing.JFrame {
                                 .addGap(0, 18, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_sold_by)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                                 .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -472,13 +506,15 @@ public class GFTECH_order_form extends javax.swing.JFrame {
                         .addGap(36, 36, 36))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119)
+                        .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel_order_price1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_order_total_show, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel_order_total_show, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
                         .addComponent(jButton_print)
-                        .addGap(51, 51, 51))))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,14 +541,14 @@ public class GFTECH_order_form extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel_order_price1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton_print, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel_order_total_show, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel_order_price1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_print, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_order_total_show, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_sold_by, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -538,8 +574,8 @@ public class GFTECH_order_form extends javax.swing.JFrame {
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:gftech_db.db");
             Statement stmt = con.createStatement();
-            String query = "insert into gftech_order (OrderID, CustName, OrderDate,  Amount) values ('"+Integer.valueOf(jTextField_order_id.getText())+"', "
-                    + "'"+jLabel_order_name_show.getText()+"', '"+jLabel_order_date_show.getText()+"', '"+Integer.valueOf(jLabel_order_total_show.getText())+"')";
+            String query = "insert into gftech_order (OrderID, CustName, OrderDate,  Amount, Soldby) values ('"+Integer.valueOf(jTextField_order_id.getText())+"', "
+                    + "'"+jLabel_order_name_show.getText()+"', '"+jLabel_order_date_show.getText()+"', '"+Integer.valueOf(jLabel_order_total_show.getText())+"','"+jComboBox.getSelectedItem().toString()+"')";
             stmt.executeUpdate(query);
             JOptionPane.showMessageDialog(null, "Order Successfully inserted!!!");
             stmt.close();
@@ -591,10 +627,10 @@ String productname;
     }//GEN-LAST:event_jButton_printActionPerformed
 
     private void jButton_view_orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_view_orderActionPerformed
-       GFTECH_view_orders vw = new GFTECH_view_orders();
-       vw.setVisible(true);
-       vw.pack();
-       vw.setLocationRelativeTo(null);
+       GFTECH_order_admin oa = new GFTECH_order_admin();
+       oa.setVisible(true);
+       oa.pack();
+       oa.setLocationRelativeTo(null);
        this.dispose();
     }//GEN-LAST:event_jButton_view_orderActionPerformed
 
@@ -657,6 +693,7 @@ int flag = 0,productid,oldqty;
     private javax.swing.JButton jButton_insert_order;
     private javax.swing.JButton jButton_print;
     private javax.swing.JButton jButton_view_order;
+    private javax.swing.JComboBox<String> jComboBox;
     private javax.swing.JLabel jLabel_customer_name;
     private javax.swing.JLabel jLabel_customerlist;
     private javax.swing.JLabel jLabel_gftech_logo;
@@ -669,6 +706,7 @@ int flag = 0,productid,oldqty;
     private javax.swing.JLabel jLabel_order_quantity;
     private javax.swing.JLabel jLabel_order_total_show;
     private javax.swing.JLabel jLabel_productlist;
+    private javax.swing.JLabel jLabel_sold_by;
     private javax.swing.JLabel jLabel_title;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
